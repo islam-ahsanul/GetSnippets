@@ -1,4 +1,4 @@
-import Feed from '@/components/feed';
+import Feed from '@/components/Feed';
 
 const homepage = () => {
   return (
@@ -6,7 +6,7 @@ const homepage = () => {
       <h1 className="head_text text-center text-foreground">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit.
       </h1>
-      <p className="desc muted-foreground text-center">
+      <p className="desc text-center text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa doloribus
         error quae quod eligendi nemo veritatis nam delectus accusamus labore
         tenetur fugiat, libero cupiditate asperiores explicabo minus odio est
