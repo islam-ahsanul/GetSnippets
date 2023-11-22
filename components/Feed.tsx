@@ -4,14 +4,20 @@ import PostCard from './PostCard';
 
 type PostCardListProps = {
   data: any;
-  handleClick: (id: string) => void;
+  handleTagClick: () => void;
 };
 
-const PostCardList = ({ data, handleClick }: PostCardListProps) => {
+const PostCardList = ({ data, handleTagClick }: PostCardListProps) => {
   return (
     <div className="post_layout mt-16">
       {data.map((post: any) => (
-        <PostCard key={post._id} post={post} handleClick={handleClick} />
+        <PostCard
+          key={post._id}
+          post={post}
+          handleTagClick={handleTagClick}
+          handleEdit={() => {}}
+          handleDelete={() => {}}
+        />
       ))}
     </div>
   );
@@ -51,7 +57,7 @@ const Feed = () => {
         />
       </form>
 
-      <PostCardList data={posts} handleClick={() => {}} />
+      <PostCardList data={posts} handleTagClick={() => {}} />
     </section>
   );
 };
