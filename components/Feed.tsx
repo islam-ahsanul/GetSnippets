@@ -28,7 +28,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch('/api/posts');
+        const res = await fetch('/api/post');
         const data = await res.json();
         setPosts(data);
       } catch (err) {
