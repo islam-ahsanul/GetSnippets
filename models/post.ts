@@ -15,6 +15,11 @@ const PostSchema = new Schema({
     type: String,
     required: [true, 'Body is required'],
   },
+
+  tag: {
+    type: String,
+    required: [true, 'Tag is required'],
+  },
 });
 
 const Post = models.Post || model('Post', PostSchema);

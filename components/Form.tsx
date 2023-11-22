@@ -58,6 +58,28 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
             className="form_textarea"
           ></textarea>
         </label>
+
+        <label>
+          <span className="font-satoshi text-base font-semibold text-gray-700">
+            Field of Post{' '}
+            <span className="font-normal">
+              (#product, #webdevelopment, #idea, etc.)
+            </span>
+          </span>
+          <input
+            value={post.tag}
+            onChange={(e) =>
+              setPost({
+                ...post,
+                tag: e.target.value,
+              })
+            }
+            type="text"
+            placeholder="#Tag"
+            required
+            className="form_input"
+          />
+        </label>
         <div className="mx-3 mb-5 flex items-center justify-end gap-4">
           <Link href="/" className="text-sm text-gray-500">
             Cancel

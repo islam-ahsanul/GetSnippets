@@ -8,6 +8,7 @@ import Form from '@/components/Form';
 export type PostType = {
   title: string;
   body: string;
+  tag: string;
 };
 
 const CreatePost = () => {
@@ -18,6 +19,7 @@ const CreatePost = () => {
   const [post, setPost] = useState<PostType>({
     title: '',
     body: '',
+    tag: '',
   });
   const createThePost = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ const CreatePost = () => {
           userId: session?.user.id,
           title: post.title,
           body: post.body,
+          tag: post.tag,
         }),
       });
 
