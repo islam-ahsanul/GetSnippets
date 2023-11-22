@@ -44,7 +44,7 @@ const handler = NextAuth({
 
         return true;
       } catch (error) {
-        // console.log("Error checking if user exists: ", error.message);
+        console.error('Error during sign-in process:', error);
         return false;
       }
     },
