@@ -1,7 +1,59 @@
-import React from 'react';
+'use client';
+import { useState, useEffect } from 'react';
+import PostCard from './PostCard';
+
+type PostCardListProps = {
+  data: any;
+  handleClick: (id: string) => void;
+};
+
+const PostCardList = ({ data, handleClick }: PostCardListProps) => {
+  return (
+    <div className="post_layout mt-16">
+      {data.map((post: any) => (
+        <PostCard key={post._id} post={post} handleClick={handleClick} />
+      ))}
+    </div>
+  );
+};
 
 const Feed = () => {
-  return <div>Feed</div>;
+  const [searchText, setSearchText] = useState('');
+  const [posts, setPosts] = useState([]);
+
+  const handleSearchChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch('/api/posts');
+        const data = await res.json();
+        setPosts(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  return (
+    <section className="feed">
+      <form className="relative flex w-full items-center justify-center">
+        <input
+          type="text"
+          placeholder="search for codes"
+          value={searchText}
+          onChange={handleSearchChange}
+          required
+          className="search_input peer"
+        />
+      </form>
+
+      <PostCardList data={posts} handleClick={() => {}} />
+    </section>
+  );
 };
 
 export default Feed;
