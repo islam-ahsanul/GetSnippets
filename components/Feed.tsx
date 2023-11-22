@@ -4,7 +4,7 @@ import PostCard from './PostCard';
 
 type PostCardListProps = {
   data: any;
-  handleTagClick: () => void;
+  handleTagClick: (tag: string) => void;
 };
 
 const PostCardList = ({ data, handleTagClick }: PostCardListProps) => {

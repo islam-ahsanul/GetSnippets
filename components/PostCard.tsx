@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 type PostCardProps = {
   post: any;
-  handleTagClick: () => void;
+  handleTagClick: (tag: string) => void;
   handleEdit: () => void;
   handleDelete: () => void;
 };
@@ -18,6 +18,12 @@ const PostCard = ({
   handleDelete,
 }: PostCardProps) => {
   const [copied, setCopied] = useState('');
+  const handleCopy = () => {
+    setCopied(post.body);
+    navigator.clipboard.writeText(post.body);
+
+    setTimeout(() => setCopied(''), 3000);
+  };
   return (
     <div className="post_card ">
       <div className="flex items-start justify-between gap-5">
@@ -34,7 +40,7 @@ const PostCard = ({
             <p className="text-sm text-gray-500">{post.creator.email}</p>
           </div>
         </div>
-        <div className="copy_btn" onClick={() => {}}>
+        <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={copied === post.body ? '/icons/tick.svg' : '/icons/copy.svg'}
             width={12}
@@ -45,6 +51,12 @@ const PostCard = ({
       </div>
       <p className="my-4 text-sm text-gray-700">{post.title}</p>
       <p className="my-4 text-sm text-gray-700">{post.body}</p>
+      <p
+        className="cursor-pointer text-sm text-blue-500"
+        onClick={() => handleTagClick && handleTagClick(post.tag)}
+      >
+        {post.tag}
+      </p>
     </div>
   );
 };
