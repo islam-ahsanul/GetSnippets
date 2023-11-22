@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Form from '@/components/Form';
 
 export type PostType = {
@@ -24,12 +24,15 @@ const CreatePost = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/posts/new', {
+      const response = await fetch('/api/post/new', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          post: post.title,
-          body: post.body,
           userId: session?.user.id,
+          title: post.title,
+          body: post.body,
         }),
       });
 
