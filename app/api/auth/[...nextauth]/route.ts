@@ -35,10 +35,12 @@ const handler = NextAuth({
 
         // if not, create a new document and save user in MongoDB
         if (!userExists) {
+          console.log(profile);
           await User.create({
             email: profile.email,
+            name: profile.name,
             username: profile.name?.replace(' ', '').toLowerCase(),
-            image: profile.image,
+            image: profile.picture,
           });
         }
 
