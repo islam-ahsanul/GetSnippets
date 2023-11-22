@@ -7,7 +7,8 @@ type FormProps = {
   post: PostType;
   setPost: React.Dispatch<React.SetStateAction<PostType>>;
   submitting: boolean;
-  handleSubmit: () => void;
+  // handleSubmit: (e: React.FormEvent) => Promise<void>;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
 const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
