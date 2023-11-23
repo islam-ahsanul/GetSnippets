@@ -56,9 +56,10 @@ export const PATCH = async (req: any, route: { params: { id: string } }) => {
 
 export const DELETE = async (req: any, route: { params: { id: string } }) => {
   try {
+    console.log('💡💡💡');
     await connectToDB();
     const id: string = route.params.id;
-    await Post.findByIdAndRemove(id);
+    await Post.findByIdAndDelete(id);
     return new Response('Post deleted successfully', { status: 200 });
   } catch (error) {
     return new Response('Failed to delete post', { status: 500 });

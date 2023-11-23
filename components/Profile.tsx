@@ -30,7 +30,7 @@ const Profile = ({
             key={post._id}
             post={post}
             handleEdit={() => handleEdit && handleEdit(post)}
-            handleDelete={() => handleEdit && handleEdit(post)}
+            handleDelete={() => handleDelete && handleDelete(post)}
           />
         ))}
       </div>
