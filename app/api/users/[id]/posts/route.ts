@@ -12,7 +12,7 @@ export const GET = async (
     // const id = req.nextUrl.pathname;
 
     const id: string = route.params.id;
-    console.log('📌🌳', id);
+    // console.log('📌🌳', id);
 
     const posts = await Post.find({ creator: id }).populate('creator');
 

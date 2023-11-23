@@ -17,6 +17,10 @@ const PostCard = ({
   handleEdit,
   handleDelete,
 }: PostCardProps) => {
+  const { data: session } = useSession();
+  const pathName = usePathname();
+  const router = useRouter();
+
   const [copied, setCopied] = useState('');
   const handleCopy = () => {
     setCopied(post.body);
@@ -57,6 +61,22 @@ const PostCard = ({
       >
         {post.tag}
       </p>
+      {session?.user.id === post.creator._id && pathName === '/profile' && (
+        <div className="mt-5 flex items-center justify-center gap-4 border-t border-gray-100 pt-3">
+          <p
+            className="cursor-pointer text-sm text-green-500"
+            onClick={handleEdit}
+          >
+            Edit
+          </p>
+          <p
+            className="cursor-pointer text-sm text-orange-500"
+            onClick={handleDelete}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };
