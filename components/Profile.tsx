@@ -1,5 +1,6 @@
 import { type } from 'os';
 import React from 'react';
+import PostCard from './PostCard';
 
 type ProfileProps = {
   name: string;
@@ -17,7 +18,22 @@ const Profile = ({
 }: ProfileProps) => {
   return (
     <section className="w-full">
-      <h1> {name} Profile</h1>
+      <h1 className="head_text text-left">
+        {' '}
+        <span className="text-blue-500">{name} Profile</span>{' '}
+      </h1>
+      <p className="desc text-left"> {desc}</p>
+
+      <div className="post_layout mt-10">
+        {data.map((post: any) => (
+          <PostCard
+            key={post._id}
+            post={post}
+            handleEdit={() => handleEdit && handleEdit(post)}
+            handleDelete={() => handleEdit && handleEdit(post)}
+          />
+        ))}
+      </div>
     </section>
   );
 };

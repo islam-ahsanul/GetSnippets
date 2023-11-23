@@ -7,9 +7,9 @@ import { usePathname, useRouter } from 'next/navigation';
 
 type PostCardProps = {
   post: any;
-  handleTagClick: (tag: string) => void;
-  handleEdit: () => void;
-  handleDelete: () => void;
+  handleTagClick?: any;
+  handleEdit?: any;
+  handleDelete?: any;
 };
 const PostCard = ({
   post,

@@ -11,13 +11,7 @@ const PostCardList = ({ data, handleTagClick }: PostCardListProps) => {
   return (
     <div className="post_layout mt-16">
       {data.map((post: any) => (
-        <PostCard
-          key={post._id}
-          post={post}
-          handleTagClick={handleTagClick}
-          handleEdit={() => {}}
-          handleDelete={() => {}}
-        />
+        <PostCard key={post._id} post={post} handleTagClick={handleTagClick} />
       ))}
     </div>
   );

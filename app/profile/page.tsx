@@ -22,8 +22,8 @@ const ProfilePage = () => {
     if (session?.user.id) fetchPosts();
   }, []);
 
-  const handleEdit = () => {};
-  const handleDelete = async () => {};
+  const handleEdit = (post: any) => {};
+  const handleDelete = async (post: any) => {};
 
   return (
     <Profile

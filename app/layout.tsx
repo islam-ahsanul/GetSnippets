@@ -4,6 +4,8 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import Nav from '@/components/Nav';
 import AuthProvider from '@/components/AuthProvider';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,15 +14,16 @@ export const metadata: Metadata = {
   description: 'Get snippets of your needs',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
+        <AuthProvider session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
