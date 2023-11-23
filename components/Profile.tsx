@@ -6,8 +6,8 @@ type ProfileProps = {
   name: string;
   desc: string;
   data: any;
-  handleEdit: any;
-  handleDelete: any;
+  handleEdit?: any;
+  handleDelete?: any;
 };
 const Profile = ({
   name,
