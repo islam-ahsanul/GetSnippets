@@ -22,8 +22,10 @@ const ProfilePage = () => {
     if (session?.user.id) fetchPosts();
   }, []);
 
-  const handleEdit = () => {};
-  const handleDelete = async () => {};
+  const handleEdit = (post: any) => {
+    router.push(`/update-post?id=${post._id}`);
+  };
+  const handleDelete = async (post: any) => {};
 
   return (
     <Profile
