@@ -132,37 +132,43 @@ const PostCard = ({
         </div>
       </div>
 
-      <div className="flex w-full flex-row items-center justify-center gap-4 ">
+      <div className="flex w-full flex-row items-center justify-end gap-4 ">
         {session?.user.id === post.creator._id && pathName === '/profile' && (
-          <div className="flex flex-row">
-            <p
-              className="cursor-pointer text-sm text-green-500"
-              onClick={handleEdit}
-            >
+          <div className="flex flex-row gap-4">
+            <button className="bg-black text-green-500" onClick={handleEdit}>
               Edit
-            </p>
-            <p
-              className="cursor-pointer text-sm text-orange-500"
-              onClick={handleDelete}
-            >
+            </button>
+            <button className="bg-black text-orange-500" onClick={handleDelete}>
               Delete
-            </p>
+            </button>
           </div>
         )}
 
         {/*  */}
         <div className="flex flex-row gap-4">
-          <button className=" text-green-500" onClick={handleEdit}>
-            Edit
+          <button
+            className="flex gap-1 rounded-md bg-gray-400 px-2 text-green-500"
+            onClick={handleEdit}
+          >
+            <Image src="/icons/edit.svg" alt="delete" height={20} width={20} />
+            <p>Edit</p>
           </button>
-          <button className=" text-orange-500" onClick={handleDelete}>
-            Delete
+          <button
+            className="flex gap-1 rounded-md bg-gray-400 px-2 text-orange-500"
+            onClick={handleDelete}
+          >
+            <Image src="/icons/trash.svg" alt="delete" height={20} width={20} />
+            <p>Delete</p>
           </button>
         </div>
         {/*  */}
 
-        <button onClick={navigateToPostDetails} className=" text-purple-400 ">
-          View Details
+        <button
+          onClick={navigateToPostDetails}
+          className="flex gap-1 rounded-md bg-gray-400 px-2 text-purple-400"
+        >
+          <Image src="/icons/open.svg" alt="delete" height={20} width={20} />
+          <p>View</p>
         </button>
       </div>
     </div>
