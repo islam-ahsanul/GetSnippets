@@ -95,12 +95,12 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
       const response = await fetch(`/api/post/${params?.id}/like`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: session?.user.id }), // Send user ID
+        body: JSON.stringify({ userId: session?.user.id }),
       });
 
       const updatedPost = await response.json();
       if (response.ok) {
-        setPost(updatedPost);
+        setPost(updatedPost); // Update the post state with the new like data
       } else {
         console.error('Failed to update like status');
       }
