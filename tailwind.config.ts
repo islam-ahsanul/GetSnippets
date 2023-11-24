@@ -19,6 +19,8 @@ module.exports = {
       colors: {
         'accent-1': 'hsl(var(--accent-1))',
         'accent-2': 'hsl(var(--accent-2))',
+        secondaryBg: 'var(--secondaryBg)',
+        borderColor: 'var(--borderColor)',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

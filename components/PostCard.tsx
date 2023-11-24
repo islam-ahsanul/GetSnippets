@@ -84,7 +84,7 @@ const PostCard = ({
   const { theme } = useTheme();
 
   return (
-    <div className="border-borderColor col-span-12 my-2 flex flex-col justify-between rounded-xl border-[1px] bg-white p-4">
+    <div className="bg-secondaryBg border-borderColor col-span-12 my-2 flex flex-col justify-between rounded-xl border-[2px] p-4">
       <div>
         <div className="flex w-full items-start justify-between gap-5">
           <div

@@ -80,7 +80,7 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="peer block w-full rounded-full border border-gray-200 bg-white py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-black focus:outline-none focus:ring-0"
+          className="bg-secondaryBg peer block w-full rounded-full border border-muted py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-muted-foreground focus:outline-none focus:ring-0"
         />
       </form>
 

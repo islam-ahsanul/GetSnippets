@@ -8,6 +8,7 @@
     --accent-2: 254, 20%, 44%;
     --background: 0, 0%, 100%;
     --foreground: 222.2 84% 4.9%;
+    --secondaryBg: #efefef;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -35,12 +36,15 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-    --borderColor: 214, 32%, 91%;
+    --borderColor: #ffffff;
   }
 
   .dark {
+    --accent-1: 82, 100%, 76%;
+    --accent-2: 248, 100%, 82%;
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    --secondaryBg: #1b1e2b81;
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -66,6 +70,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    --borderColor: #202435;
   }
 }
 
