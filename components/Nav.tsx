@@ -98,11 +98,16 @@ const Nav = () => {
       {/* Mobile Navigation */}
       <div className="relative flex sm:hidden">
         <button
+          className="mr-6"
           onClick={() => {
             setTheme(theme === 'dark' ? 'light' : 'dark');
           }}
         >
-          change theme
+          {theme === 'dark' ? (
+            <Image src="/icons/sun.svg" alt="sun" height={24} width={24} />
+          ) : (
+            <Image src="/icons/moon.svg" alt="moon" height={24} width={24} />
+          )}
         </button>
         {session?.user ? (
           <div className="flex">

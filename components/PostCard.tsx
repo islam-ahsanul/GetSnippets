@@ -141,12 +141,7 @@ const PostCard = ({
               className="flex gap-1 rounded-md bg-muted px-2 text-green-500"
               onClick={handleEdit}
             >
-              <Image
-                src="/icons/edit.svg"
-                alt="edit"
-                height={20}
-                width={20}
-              />
+              <Image src="/icons/edit.svg" alt="edit" height={20} width={20} />
               <p>Edit</p>
             </button>
             <button
