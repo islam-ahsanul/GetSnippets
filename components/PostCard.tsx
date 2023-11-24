@@ -36,6 +36,10 @@ const PostCard = ({
 
     router.push(`/profile/${post.creator._id}?name=${post.creator.name}`);
   };
+
+  const navigateToPostDetails = () => {
+    router.push(`/post-detail/${post._id}`); // Navigate to PostDetails page
+  };
   return (
     <div className="post_card ">
       <div className="flex items-start justify-between gap-5">
@@ -88,6 +92,13 @@ const PostCard = ({
           </p>
         </div>
       )}
+
+      <button
+        onClick={navigateToPostDetails}
+        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+      >
+        View Details
+      </button>
     </div>
   );
 };
