@@ -72,15 +72,15 @@ const Feed = () => {
   };
 
   return (
-    <section className="feed">
-      <form className="relative flex w-full items-center justify-center">
+    <section className=" mt-16 flex w-full flex-col items-center justify-center">
+      <form className="relative flex w-full items-center justify-center lg:max-w-[600px]">
         <input
           type="text"
-          placeholder="search for codes"
+          placeholder="Search for title, author, or tag"
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="search_input peer"
+          className="peer block w-full rounded-md border border-gray-200 bg-white py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-black focus:outline-none focus:ring-0"
         />
       </form>
 
