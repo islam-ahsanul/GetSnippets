@@ -34,7 +34,12 @@ export const POST = async (req: any, route: { params: { id: string } }) => {
     await post.save();
     await user.save();
 
-    return new Response(JSON.stringify(post), { status: 200 });
+    // Re-fetch the post to populate user data in comments
+    const updatedPost = await Post.findById(postId)
+      .populate('creator')
+      .populate('comments.user', 'name image'); // Populate user data in comments
+
+    return new Response(JSON.stringify(updatedPost), { status: 200 });
   } catch (error) {
     console.error('Failed to update like', error);
     return new Response('Failed to update like', { status: 500 });
