@@ -17,7 +17,7 @@ const Profile = ({
   handleDelete,
 }: ProfileProps) => {
   return (
-    <section className="mx-10">
+    <section className="mx-10 mb-20">
       <h1 className="mt-3 text-left text-2xl font-extrabold leading-[1.15] text-foreground sm:text-5xl">
         {' '}
         <span className="text-accent-1">{name} Profile</span>{' '}
