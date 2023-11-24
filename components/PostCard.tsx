@@ -84,7 +84,7 @@ const PostCard = ({
   const { theme } = useTheme();
 
   return (
-    <div className="bg-secondaryBg border-borderColor col-span-12 my-2 flex flex-col justify-between rounded-xl border-[2px] p-4">
+    <div className="bg-secondaryBg border-borderColor col-span-6 my-2 flex flex-col justify-between rounded-xl border-[2px] p-4">
       <div>
         <div className="flex w-full items-start justify-between gap-5">
           <div
@@ -143,14 +143,14 @@ const PostCard = ({
             >
               <Image
                 src="/icons/edit.svg"
-                alt="delete"
+                alt="edit"
                 height={20}
                 width={20}
               />
               <p>Edit</p>
             </button>
             <button
-              className="flex gap-1 rounded-md bg-muted px-2 text-orange-500"
+              className="flex gap-1 rounded-md bg-muted px-2 text-red-500"
               onClick={handleDelete}
             >
               <Image
