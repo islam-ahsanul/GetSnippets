@@ -82,7 +82,7 @@ const PostCard = ({
   const tags = post.tag.split(' ');
 
   return (
-    <div className="col-span-12 flex flex-col justify-between rounded-xl bg-gray-100 p-4">
+    <div className="border-borderColor col-span-12 my-2 flex flex-col justify-between rounded-xl border-[1px] bg-white p-4">
       <div>
         <div className="flex w-full items-start justify-between gap-5">
           <div
@@ -97,10 +97,10 @@ const PostCard = ({
               className="rounded-full object-contain"
             />
             <div className="flex cursor-pointer items-center justify-center gap-4 ">
-              <h3 className="flex-gray-900 font-semibold">
+              <h3 className="flex tracking-wider text-foreground">
                 {post.creator.name}
               </h3>
-              <code className="text-sm text-gray-500">
+              <code className="text-sm text-muted-foreground">
                 {timeAgo(post.createdAt)}
               </code>
             </div>
@@ -113,11 +113,11 @@ const PostCard = ({
             alt="copy_icon"
           />
         </div> */}
-          <div className="flex h-full w-min flex-row items-center justify-center gap-4 bg-green-300">
+          <div className="flex h-full w-min flex-row items-center justify-center gap-4">
             {tags.map((tag: string, index: number) => (
               <code
                 key={index}
-                className="cursor-pointer rounded-full bg-black px-2 text-sm text-blue-500"
+                className="bg-accent-1 hover:bg-accent-2 cursor-pointer rounded-full px-2 text-sm text-background"
                 onClick={() => handleTagClick(tag)}
               >
                 {tag}
@@ -125,8 +125,8 @@ const PostCard = ({
             ))}
           </div>
         </div>
-        <div className="ml-12 mt-4 pb-10">
-          <p className="text-sm text-foreground md:text-lg lg:text-xl">
+        <div className="mx-12 mt-4 pb-10">
+          <p className="text-md font-semibold text-foreground md:text-lg lg:text-xl">
             {post.title}
           </p>
         </div>
@@ -135,37 +135,36 @@ const PostCard = ({
       <div className="flex w-full flex-row items-center justify-end gap-4 ">
         {session?.user.id === post.creator._id && pathName === '/profile' && (
           <div className="flex flex-row gap-4">
-            <button className="bg-black text-green-500" onClick={handleEdit}>
-              Edit
+            <button
+              className="flex gap-1 rounded-md bg-muted px-2 text-green-500"
+              onClick={handleEdit}
+            >
+              <Image
+                src="/icons/edit.svg"
+                alt="delete"
+                height={20}
+                width={20}
+              />
+              <p>Edit</p>
             </button>
-            <button className="bg-black text-orange-500" onClick={handleDelete}>
-              Delete
+            <button
+              className="flex gap-1 rounded-md bg-muted px-2 text-orange-500"
+              onClick={handleDelete}
+            >
+              <Image
+                src="/icons/trash.svg"
+                alt="delete"
+                height={20}
+                width={20}
+              />
+              <p>Delete</p>
             </button>
           </div>
         )}
 
-        {/*  */}
-        <div className="flex flex-row gap-4">
-          <button
-            className="flex gap-1 rounded-md bg-gray-400 px-2 text-green-500"
-            onClick={handleEdit}
-          >
-            <Image src="/icons/edit.svg" alt="delete" height={20} width={20} />
-            <p>Edit</p>
-          </button>
-          <button
-            className="flex gap-1 rounded-md bg-gray-400 px-2 text-orange-500"
-            onClick={handleDelete}
-          >
-            <Image src="/icons/trash.svg" alt="delete" height={20} width={20} />
-            <p>Delete</p>
-          </button>
-        </div>
-        {/*  */}
-
         <button
           onClick={navigateToPostDetails}
-          className="flex gap-1 rounded-md bg-gray-400 px-2 text-purple-400"
+          className="text-accent-1 flex gap-1 rounded-md bg-muted px-2"
         >
           <Image src="/icons/open.svg" alt="delete" height={20} width={20} />
           <p>View</p>

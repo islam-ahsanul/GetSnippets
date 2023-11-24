@@ -72,7 +72,7 @@ const Feed = () => {
   };
 
   return (
-    <section className=" mt-16 flex w-full flex-col items-center justify-center">
+    <section className=" mb-10 mt-16 flex max-w-[1024px] flex-col items-center justify-center">
       <form className="relative flex w-full items-center justify-center lg:max-w-[600px]">
         <input
           type="text"
@@ -80,7 +80,7 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="peer block w-full rounded-md border border-gray-200 bg-white py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-black focus:outline-none focus:ring-0"
+          className="peer block w-full rounded-full border border-gray-200 bg-white py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-black focus:outline-none focus:ring-0"
         />
       </form>
 
