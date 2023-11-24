@@ -13,7 +13,9 @@ export const GET = async (
     const id: string = route.params.id;
     // console.log('📌🌳', id);
 
-    const post = await Post.findById(id).populate('creator');
+    const post = await Post.findById(id)
+      .populate('creator')
+      .populate('comments.user', 'name image');
 
     if (!post) {
       return new Response('Post not found', { status: 404 });

@@ -18,11 +18,11 @@ export type CommentType = {
 };
 
 export type PostType = {
-  _id: string; // Include _id if you need to reference the post's ID
+  _id: string;
   title: string;
   body: string;
   tag: string;
-  likes: string[]; // Array of user IDs
+  likes: string[];
   comments: CommentType[];
 };
 
@@ -52,8 +52,8 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
         title: data.title,
         body: data.body,
         tag: data.tag,
-        likes: data.likes || [], // Handle undefined case
-        comments: data.comments || [], // Handle undefined case
+        likes: data.likes || [],
+        comments: data.comments || [],
       });
     };
 
@@ -62,11 +62,11 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
 
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!newComment.trim()) return; // Prevent empty comments
+    if (!newComment.trim()) return;
 
     const commentData = {
       text: newComment,
-      userId: session?.user.id, // Assuming you have the user's ID in the session
+      userId: session?.user.id,
     };
     try {
       setSubmitting(true);
@@ -79,7 +79,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
       const updatedPost = await response.json();
       if (response.ok) {
         setPost(updatedPost);
-        setNewComment(''); // Clear the comment input field
+        setNewComment('');
       } else {
         console.error('Failed to submit comment');
       }
