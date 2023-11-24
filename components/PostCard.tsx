@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 type PostCardProps = {
   post: any;
@@ -80,6 +81,7 @@ const PostCard = ({
   }
 
   const tags = post.tag.split(' ');
+  const { theme } = useTheme();
 
   return (
     <div className="border-borderColor col-span-12 my-2 flex flex-col justify-between rounded-xl border-[1px] bg-white p-4">
@@ -166,7 +168,17 @@ const PostCard = ({
           onClick={navigateToPostDetails}
           className="text-accent-1 flex gap-1 rounded-md bg-muted px-2"
         >
-          <Image src="/icons/open.svg" alt="delete" height={20} width={20} />
+          {theme === 'dark' ? (
+            <Image
+              src="/icons/open-white.svg"
+              alt="delete"
+              height={20}
+              width={20}
+            />
+          ) : (
+            <Image src="/icons/open.svg" alt="delete" height={20} width={20} />
+          )}
+
           <p>View</p>
         </button>
       </div>
