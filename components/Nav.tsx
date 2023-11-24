@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -18,6 +19,8 @@ const Nav = () => {
     };
     setUpProviders();
   }, []);
+
+  const { theme, setTheme } = useTheme();
 
   return (
     <nav className=" mb-16 flex w-full items-center justify-between px-10 pt-3">
@@ -34,6 +37,13 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className="hidden sm:flex">
+        <button
+          onClick={() => {
+            setTheme(theme === 'dark' ? 'light' : 'dark');
+          }}
+        >
+          change theme
+        </button>
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-post" className="black_btn">
@@ -82,6 +92,13 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="relative flex sm:hidden">
+        <button
+          onClick={() => {
+            setTheme(theme === 'dark' ? 'light' : 'dark');
+          }}
+        >
+          change theme
+        </button>
         {session?.user ? (
           <div className="flex">
             <Image
