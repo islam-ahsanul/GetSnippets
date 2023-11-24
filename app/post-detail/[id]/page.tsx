@@ -100,7 +100,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
 
       const updatedPost = await response.json();
       if (response.ok) {
-        setPost(updatedPost); // Update the post state with the new like data
+        setPost(updatedPost); // This updates the post with the new likes
       } else {
         console.error('Failed to update like status');
       }
@@ -121,6 +121,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           ? 'Unlike'
           : 'Like'}
       </button>
+
       <p>Likes: {post.likes.length}</p>
 
       {/* Comments section */}

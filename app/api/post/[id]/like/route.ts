@@ -1,6 +1,7 @@
 // app/api/post/[id]/like/route.ts
 import { connectToDB } from '@/utils/database';
 import Post from '@/models/post';
+import User from '@/models/user';
 import type { NextRequest } from 'next/server';
 
 // POST app/api/post/[id]/like/route.ts
@@ -9,22 +10,30 @@ export const POST = async (req: any, route: { params: { id: string } }) => {
   try {
     await connectToDB();
     const postId = route.params.id;
-    const userId = req.body.userId; // Get the user ID from the request body
+    const { userId } = await req.json();
 
     const post = await Post.findById(postId);
-    if (!post) {
-      return new Response('Post not found', { status: 404 });
+    const user = await User.findById(userId);
+
+    if (!post || !user) {
+      return new Response('Post or user not found', { status: 404 });
     }
 
-    // Toggle like status
+    // Check if the user has already liked the post
     const likeIndex = post.likes.indexOf(userId);
     if (likeIndex > -1) {
-      post.likes.splice(likeIndex, 1); // User already liked the post, so unlike it
+      // Unlike the post
+      post.likes.splice(likeIndex, 1);
+      user.likedPosts.pull(postId); // Remove post from user's likedPosts
     } else {
-      post.likes.push(userId); // Like the post
+      // Like the post
+      post.likes.push(userId);
+      user.likedPosts.push(postId); // Add post to user's likedPosts
     }
 
     await post.save();
+    await user.save();
+
     return new Response(JSON.stringify(post), { status: 200 });
   } catch (error) {
     console.error('Failed to update like', error);
