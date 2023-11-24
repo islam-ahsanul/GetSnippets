@@ -82,7 +82,7 @@ const PostCard = ({
   const tags = post.tag.split(' ');
 
   return (
-    <div className="col-span-12 flex h-[250px] flex-col justify-between rounded-xl bg-gray-100 p-4">
+    <div className="col-span-12 flex flex-col justify-between rounded-xl bg-gray-100 p-4">
       <div>
         <div className="flex w-full items-start justify-between gap-5">
           <div
@@ -125,7 +125,7 @@ const PostCard = ({
             ))}
           </div>
         </div>
-        <div className="mt-4">
+        <div className="ml-12 mt-4 pb-10">
           <p className="text-sm text-foreground md:text-lg lg:text-xl">
             {post.title}
           </p>
