@@ -6,9 +6,9 @@
   :root {
     --accent-1: 210, 92%, 28%;
     --accent-2: 254, 20%, 44%;
-    --background: 0, 0%, 100%;
+    --background: 210 40% 96.1%;
     --foreground: 222.2 84% 4.9%;
-    --secondaryBg: #efefef;
+    --secondaryBg: #ffffff;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
