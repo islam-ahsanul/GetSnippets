@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Profile from '@/components/Profile';
 import PostCard from '@/components/PostCard';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ProfilePage = () => {
   const { data: session } = useSession();
@@ -62,7 +63,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="mx-4">
+    <div className="w-full px-10">
       <div>
         <h1 className="mt-3 text-left text-2xl font-extrabold leading-[1.15] text-foreground sm:text-5xl">
           {' '}
@@ -71,33 +72,47 @@ const ProfilePage = () => {
         <p className="text-md mt-5 max-w-[900px] text-left text-muted-foreground">
           Your Personalized Profile Page
         </p>
-        <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
-          All Posts
-        </p>
       </div>
-      <Profile
-        // name="My"
-        // desc="Welcome to your profile page"
-        data={posts}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
 
-      <div>
-        <h2>Liked Posts</h2>
-        {likedPosts.length > 0 ? (
-          likedPosts.map((post: any) => (
-            <PostCard
-              key={post._id}
-              post={post}
-              // handleEdit={() => handleEdit && handleEdit(post)}
-              // handleDelete={() => handleDelete && handleDelete(post)}
-            />
-          ))
-        ) : (
-          <p>You have not liked any posts yet.</p>
-        )}
-      </div>
+      <Tabs defaultValue="account" className="mt-32">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="password">Password</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
+            All Posts
+          </p>
+          <Profile
+            data={posts}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+        </TabsContent>
+        <TabsContent value="password">
+          <section className="mx-10 mb-20">
+            <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
+              Liked Posts
+            </p>
+            <div className="grid grid-cols-6 gap-8 pt-10 lg:grid-cols-12">
+              {likedPosts.length > 0 ? (
+                likedPosts.map((post: any) => (
+                  <PostCard
+                    key={post._id}
+                    post={post}
+                    handleEdit={() => handleEdit && handleEdit(post)}
+                    handleDelete={() => handleDelete && handleDelete(post)}
+                  />
+                ))
+              ) : (
+                <div className="flex w-full flex-col items-center justify-center">
+                  <p>You have not liked any posts yet.</p>
+                </div>
+              )}
+            </div>
+          </section>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
