@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
+import AnimatedLoading from '@/components/AnimatedLoading';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
   coldarkDark,
@@ -185,11 +186,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   return (
     <div className="mb-10 w-full max-w-[1400px] px-10">
       {isLoading ? (
-        <div className="bg-steel-blue-5/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-center  justify-center">
-          <p className="text-xl font-semibold uppercase tracking-widest text-muted-foreground">
-            Loading...
-          </p>
-        </div>
+        <AnimatedLoading />
       ) : (
         <div>
           <div className="border-b-[1px] border-muted-foreground ">
