@@ -22,14 +22,6 @@ const PostCard = ({
   const pathName = usePathname();
   const router = useRouter();
 
-  const [copied, setCopied] = useState('');
-  const handleCopy = () => {
-    setCopied(post.body);
-    navigator.clipboard.writeText(post.body);
-
-    setTimeout(() => setCopied(''), 3000);
-  };
-
   const handleProfileClick = () => {
     console.log(post);
 
@@ -41,14 +33,6 @@ const PostCard = ({
   const navigateToPostDetails = () => {
     router.push(`/post-detail/${post._id}`); // Navigate to PostDetails page
   };
-
-  // const formatDate = (dateString: string) => {
-  //   return new Date(dateString).toLocaleDateString('en-US', {
-  //     year: 'numeric',
-  //     month: 'short',
-  //     day: 'numeric',
-  //   });
-  // };
 
   function timeAgo(createdAt: string): string {
     const createdAtDate = new Date(createdAt);
@@ -107,14 +91,7 @@ const PostCard = ({
               </code>
             </div>
           </div>
-          {/* <div className="copy_btn" onClick={handleCopy}>
-          <Image
-            src={copied === post.body ? '/icons/tick.svg' : '/icons/copy.svg'}
-            width={12}
-            height={12}
-            alt="copy_icon"
-          />
-        </div> */}
+
           <div className="flex h-full w-min flex-row items-center justify-center gap-4">
             {tags.map((tag: string, index: number) => (
               <code

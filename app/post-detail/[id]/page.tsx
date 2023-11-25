@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
-import Form from '@/components/Form';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
   coldarkDark,
@@ -167,6 +166,14 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
     }
   }
 
+  const [copied, setCopied] = useState('');
+  const handleCopy = () => {
+    setCopied(post.body);
+    navigator.clipboard.writeText(post.body);
+
+    setTimeout(() => setCopied(''), 3000);
+  };
+
   return (
     <div className="mb-10 w-full max-w-[1400px] px-10">
       <div className="border-b-[1px] border-muted-foreground ">
@@ -187,8 +194,20 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           ))}
         </div>
         <div className="mr-4 flex flex-row justify-around gap-8">
+          <div
+            onClick={handleCopy}
+            className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-muted px-2"
+          >
+            <Image
+              src={copied === post.body ? '/icons/tick.svg' : '/icons/copy.svg'}
+              width={24}
+              height={24}
+              alt="copy_icon"
+            />
+            <code className="text-lg font-normal">Copy Code</code>
+          </div>
           <div className="flex flex-row items-center justify-center gap-2">
-            <code className="text-xl font-normal">
+            <code className="text-lg font-normal">
               Likes: {post.likes.length}
             </code>
             <button onClick={handleLike} disabled={!session}>
@@ -211,7 +230,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           </div>
           <Popover>
             <PopoverTrigger>
-              <div className="flex cursor-pointer items-center justify-center gap-1 rounded-md px-2 text-accent-2">
+              <div className="flex cursor-pointer items-center justify-center gap-1 rounded-md text-accent-2">
                 {isMounted && theme === 'dark' ? (
                   <Image
                     src="/icons/share_dark.svg"
@@ -281,10 +300,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
       {post.comments.length > 0 ? (
         post.comments.map((comment, index) => (
           <div key={index} className="py-2">
-            <div
-              className="flex flex-1 cursor-pointer items-center justify-start gap-3"
-              // onClick={handleProfileClick}
-            >
+            <div className="flex flex-1 cursor-pointer items-center justify-start gap-3">
               <Image
                 src={comment.user.image}
                 alt="user_image"
