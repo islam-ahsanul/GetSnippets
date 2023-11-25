@@ -3,7 +3,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import Form from '@/components/Form';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import {
+  coldarkDark,
+  coldarkCold,
+} from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export type UserType = {
   _id: string;
@@ -39,6 +45,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   });
 
   const [newComment, setNewComment] = useState<string>('');
+  const { theme } = useTheme();
 
   useEffect(() => {
     const getPostDetails = async () => {
@@ -114,7 +121,23 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
       <div className="mb-10 border-b-[1px] border-muted-foreground ">
         <h1 className=" mb-2 text-3xl lg:text-4xl">{post.title}</h1>
       </div>
-      <p>{post.body}</p>
+      {/* Display the post body as code */}
+
+      {theme === 'dark' ? (
+        <SyntaxHighlighter
+          style={coldarkDark}
+          showLineNumbers
+          wrapLines={true}
+          wrapLongLines
+          language="javascript"
+        >
+          {post.body}
+        </SyntaxHighlighter>
+      ) : (
+        <SyntaxHighlighter style={coldarkCold} showLineNumbers>
+          {post.body}
+        </SyntaxHighlighter>
+      )}
       <p>Tag: {post.tag}</p>
 
       {/* Like button */}
