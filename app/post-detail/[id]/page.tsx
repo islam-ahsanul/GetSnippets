@@ -46,8 +46,9 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   });
 
   const [newComment, setNewComment] = useState<string>('');
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const tags = post.tag.split(' ');
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const getPostDetails = async () => {
@@ -68,6 +69,16 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
 
     if (params?.id) getPostDetails();
   }, [params?.id]);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const savedTheme =
+      localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light');
+    setTheme(savedTheme);
+  }, [setTheme]);
 
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -194,7 +205,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
             // onClick={navigateToPostDetails}
             className="flex cursor-pointer items-center justify-center gap-1 rounded-md px-2 text-accent-2"
           >
-            {theme === 'dark' ? (
+            {isMounted && theme === 'dark' ? (
               <Image
                 src="/icons/share_dark.svg"
                 alt="share"
@@ -215,7 +226,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
         </div>
       </div>
 
-      {theme === 'dark' ? (
+      {isMounted && theme === 'dark' ? (
         <SyntaxHighlighter
           style={coldarkDark}
           showLineNumbers
