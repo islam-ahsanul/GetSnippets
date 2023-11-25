@@ -118,8 +118,38 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  function timeAgo(createdAt: string): string {
+    const createdAtDate = new Date(createdAt);
+    const now = new Date();
+    const difference = now.getTime() - createdAtDate.getTime();
+
+    const seconds = difference / 1000;
+    const minutes = seconds / 60;
+    const hours = minutes / 60;
+    const days = hours / 24;
+    const months = days / 30;
+    const years = days / 365;
+
+    if (seconds < 60) {
+      return `${Math.floor(seconds)} seconds ago`;
+    } else if (minutes < 60) {
+      if (minutes < 2) return `${Math.floor(minutes)} minute ago`;
+      return `${Math.floor(minutes)} minutes ago`;
+    } else if (hours < 24) {
+      if (hours < 2) return `${Math.floor(hours)} hour ago`;
+      return `${Math.floor(hours)} hours ago`;
+    } else if (days < 30) {
+      if (days < 2) return `${Math.floor(days)} day ago`;
+      return `${Math.floor(days)} days ago`;
+    } else if (months < 12) {
+      return `${Math.floor(months)} months ago`;
+    } else {
+      return `${Math.floor(years)} years ago`;
+    }
+  }
+
   return (
-    <div className="max-w-[1400px] px-10">
+    <div className="mb-10 max-w-[1400px] px-10">
       <div className="border-b-[1px] border-muted-foreground ">
         <h1 className=" mb-2 text-3xl font-semibold tracking-wide lg:text-4xl">
           {post.title}
@@ -207,30 +237,57 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
         </SyntaxHighlighter>
       )}
 
+      <p className="my-4 text-lg font-semibold tracking-widest">Comments:</p>
+
       {/* Comments section */}
       {post.comments.length > 0 ? (
         post.comments.map((comment, index) => (
-          <div key={index}>
-            <p>
-              {comment.user.name}: {comment.text}
-            </p>
+          <div key={index} className="py-2">
+            <div
+              className="flex flex-1 cursor-pointer items-center justify-start gap-3"
+              // onClick={handleProfileClick}
+            >
+              <Image
+                src={comment.user.image}
+                alt="user_image"
+                width={40}
+                height={40}
+                className="rounded-full object-contain"
+              />
+              <div className="flex cursor-pointer items-center justify-center gap-4 ">
+                <h3 className="flex text-sm tracking-wider text-foreground">
+                  {comment.user.name}
+                </h3>
+                <code className="text-sm text-muted-foreground">
+                  {timeAgo(comment.createdAt)}
+                </code>
+              </div>
+            </div>
+            <p className="ml-12 mr-12">{comment.text}</p>
           </div>
         ))
       ) : (
-        <p>No comments yet</p>
+        <code className="ml-12 mr-12">No comments yet</code>
       )}
 
       {/* Comment submission form */}
       {session ? (
-        <form onSubmit={handleCommentSubmit}>
-          <input
-            type="text"
+        <form
+          onSubmit={handleCommentSubmit}
+          className="mt-5 flex flex-col gap-3 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800"
+        >
+          <textarea
+            className="w-full resize-none rounded-xl border border-muted-foreground bg-gray-100 p-2 text-gray-700 focus:border-muted-foreground focus:outline-none focus:ring focus:ring-muted-foreground dark:bg-gray-700 dark:text-gray-300"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment..."
             disabled={submitting}
           />
-          <button type="submit" disabled={submitting}>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="self-end rounded-lg bg-accent-1 px-4 py-2 text-background transition duration-300 ease-in-out hover:bg-accent-2 "
+          >
             Submit Comment
           </button>
         </form>
