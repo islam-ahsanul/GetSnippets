@@ -87,11 +87,11 @@
   }
 
   .black_btn {
-    @apply flex items-center justify-center rounded-full border border-black bg-black px-5 py-1.5 text-center text-sm text-white transition-all hover:bg-white hover:text-black;
+    @apply flex items-center justify-center rounded-full border border-accent-1 bg-accent-1 px-5 py-1.5 text-center text-sm text-background transition-all hover:border-accent-2 hover:bg-accent-2;
   }
 
   .outline_btn {
-    @apply flex items-center justify-center rounded-full border border-black bg-transparent px-5 py-1.5 text-center text-sm text-black transition-all hover:bg-black hover:text-white;
+    @apply flex items-center justify-center rounded-full border border-accent-2 bg-transparent px-5 py-1.5 text-center text-sm text-accent-2 transition-all hover:bg-accent-2 hover:text-background;
   }
 
   .head_text {
