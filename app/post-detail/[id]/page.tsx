@@ -121,7 +121,9 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   return (
     <div className="max-w-[1400px] px-10">
       <div className="border-b-[1px] border-muted-foreground ">
-        <h1 className=" mb-2 text-3xl lg:text-4xl">{post.title}</h1>
+        <h1 className=" mb-2 text-3xl font-semibold tracking-wide lg:text-4xl">
+          {post.title}
+        </h1>
       </div>
 
       <div className="mb-10 mt-2 flex flex-row items-center justify-between">
@@ -158,8 +160,28 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
               )}
             </button>
           </div>
-          {/* Like button */}
-          <p>share</p>
+          <div
+            // onClick={navigateToPostDetails}
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-md px-2 text-accent-2"
+          >
+            {theme === 'dark' ? (
+              <Image
+                src="/icons/share_dark.svg"
+                alt="share"
+                height={20}
+                width={20}
+              />
+            ) : (
+              <Image
+                src="/icons/share_light.svg"
+                alt="share"
+                height={20}
+                width={20}
+              />
+            )}
+
+            <code className="text-xl font-normal">Share</code>
+          </div>
         </div>
       </div>
 
@@ -184,15 +206,6 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           {post.body}
         </SyntaxHighlighter>
       )}
-
-      {/* Like button */}
-      <button onClick={handleLike} disabled={!session}>
-        {session?.user.id && post.likes.includes(session?.user.id)
-          ? 'Unlike'
-          : 'Like'}
-      </button>
-
-      <p>Likes: {post.likes.length}</p>
 
       {/* Comments section */}
       {post.comments.length > 0 ? (
