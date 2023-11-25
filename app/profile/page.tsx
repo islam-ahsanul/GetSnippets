@@ -76,8 +76,8 @@ const ProfilePage = () => {
 
       <Tabs defaultValue="All Posts" className="mt-32">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="All Posts">Account</TabsTrigger>
-          <TabsTrigger value="Liked Posts">Password</TabsTrigger>
+          <TabsTrigger value="All Posts">All Posts</TabsTrigger>
+          <TabsTrigger value="Liked Posts">Liked Posts</TabsTrigger>
         </TabsList>
         <TabsContent value="All Posts">
           <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
