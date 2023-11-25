@@ -26,15 +26,19 @@ const Feed = () => {
     undefined
   );
   const [searchedResults, setSearchedResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setIsLoading(true);
         const res = await fetch('/api/post');
         const data = await res.json();
         setAllPosts(data.reverse());
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchPosts();
@@ -84,7 +88,19 @@ const Feed = () => {
         />
       </form>
 
-      {searchText ? (
+      {/* {searchText ? (
+        <PostCardList data={searchedResults} handleTagClick={handleTagClick} />
+      ) : (
+        <PostCardList data={allPosts} handleTagClick={handleTagClick} />
+      )} */}
+
+      {isLoading ? (
+        <div className="bg-steel-blue-5/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-center  justify-center">
+          <p className="text-xl font-semibold uppercase tracking-widest text-muted-foreground">
+            Loading...
+          </p>
+        </div>
+      ) : searchText ? (
         <PostCardList data={searchedResults} handleTagClick={handleTagClick} />
       ) : (
         <PostCardList data={allPosts} handleTagClick={handleTagClick} />

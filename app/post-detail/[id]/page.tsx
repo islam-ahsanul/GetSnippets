@@ -54,27 +54,35 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   const { theme, setTheme } = useTheme();
   const tags = post.tag.split(' ');
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const pathName = usePathname();
 
   useEffect(() => {
     const getPostDetails = async () => {
-      console.log(params?.id);
-      const res = await fetch(`/api/post/${params?.id}`);
+      if (params?.id) {
+        setIsLoading(true);
+        try {
+          const res = await fetch(`/api/post/${params?.id}`);
+          const data = await res.json();
 
-      const data = await res.json();
-
-      setPost({
-        _id: data._id,
-        title: data.title,
-        body: data.body,
-        tag: data.tag,
-        likes: data.likes || [],
-        comments: data.comments || [],
-      });
+          setPost({
+            _id: data._id,
+            title: data.title,
+            body: data.body,
+            tag: data.tag,
+            likes: data.likes || [],
+            comments: data.comments || [],
+          });
+        } catch (error) {
+          console.error('Error fetching post:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
     };
 
-    if (params?.id) getPostDetails();
+    getPostDetails();
   }, [params?.id]);
 
   useEffect(() => {
@@ -176,179 +184,191 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="mb-10 w-full max-w-[1400px] px-10">
-      <div className="border-b-[1px] border-muted-foreground ">
-        <h1 className=" mb-2 text-3xl font-semibold tracking-wide lg:text-4xl">
-          {post.title}
-        </h1>
-      </div>
-
-      <div className="mb-10 mt-2 flex flex-row items-center justify-between">
-        <div className="flex flex-row items-center justify-center gap-2">
-          {tags.map((tag: string, index: number) => (
-            <code
-              key={index}
-              className="text-md cursor-pointer rounded-full bg-accent-2 px-2 text-background hover:bg-accent-2"
-            >
-              {tag}
-            </code>
-          ))}
+      {isLoading ? (
+        <div className="bg-steel-blue-5/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-center  justify-center">
+          <p className="text-xl font-semibold uppercase tracking-widest text-muted-foreground">
+            Loading...
+          </p>
         </div>
-        <div className="mr-4 flex flex-row justify-around gap-8">
-          <div
-            onClick={handleCopy}
-            className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-muted px-2"
-          >
-            <Image
-              src={copied === post.body ? '/icons/tick.svg' : '/icons/copy.svg'}
-              width={24}
-              height={24}
-              alt="copy_icon"
-            />
-            <code className="text-lg font-normal">Copy Code</code>
+      ) : (
+        <div>
+          <div className="border-b-[1px] border-muted-foreground ">
+            <h1 className=" mb-2 text-3xl font-semibold tracking-wide lg:text-4xl">
+              {post.title}
+            </h1>
           </div>
-          <div className="flex flex-row items-center justify-center gap-2">
-            <code className="text-lg font-normal">
-              Likes: {post.likes.length}
-            </code>
-            <button onClick={handleLike} disabled={!session}>
-              {session?.user.id && post.likes.includes(session?.user.id) ? (
-                <Image
-                  src="/icons/like_filled.svg"
-                  alt="unlike"
-                  height={24}
-                  width={24}
-                />
-              ) : (
-                <Image
-                  src="/icons/like_outlined.svg"
-                  alt="unlike"
-                  height={24}
-                  width={24}
-                />
-              )}
-            </button>
-          </div>
-          <Popover>
-            <PopoverTrigger>
-              <div className="flex cursor-pointer items-center justify-center gap-1 rounded-md text-accent-2">
-                {isMounted && theme === 'dark' ? (
-                  <Image
-                    src="/icons/share_dark.svg"
-                    alt="share"
-                    height={20}
-                    width={20}
-                  />
-                ) : (
-                  <Image
-                    src="/icons/share_light.svg"
-                    alt="share"
-                    height={20}
-                    width={20}
-                  />
-                )}
 
-                <code className="text-xl font-normal">Share</code>
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-96">
-              <div className="flex flex-col items-center justify-center gap-4">
-                <code>{`http://localhost:3000${pathName}`}</code>
-                <button
-                  className="rounded-md bg-accent-1 px-2 py-1 text-background hover:bg-accent-2"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `http://localhost:3000${pathName}`
-                    );
-                    alert('Copied to clipboard');
-                  }}
+          <div className="mb-10 mt-2 flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-center gap-2">
+              {tags.map((tag: string, index: number) => (
+                <code
+                  key={index}
+                  className="text-md cursor-pointer rounded-full bg-accent-2 px-2 text-background hover:bg-accent-2"
                 >
-                  Copy Url
+                  {tag}
+                </code>
+              ))}
+            </div>
+            <div className="mr-4 flex flex-row justify-around gap-8">
+              <div
+                onClick={handleCopy}
+                className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-muted px-2"
+              >
+                <Image
+                  src={
+                    copied === post.body ? '/icons/tick.svg' : '/icons/copy.svg'
+                  }
+                  width={24}
+                  height={24}
+                  alt="copy_icon"
+                />
+                <code className="text-lg font-normal">Copy Code</code>
+              </div>
+              <div className="flex flex-row items-center justify-center gap-2">
+                <code className="text-lg font-normal">
+                  Likes: {post.likes.length}
+                </code>
+                <button onClick={handleLike} disabled={!session}>
+                  {session?.user.id && post.likes.includes(session?.user.id) ? (
+                    <Image
+                      src="/icons/like_filled.svg"
+                      alt="unlike"
+                      height={24}
+                      width={24}
+                    />
+                  ) : (
+                    <Image
+                      src="/icons/like_outlined.svg"
+                      alt="unlike"
+                      height={24}
+                      width={24}
+                    />
+                  )}
                 </button>
               </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </div>
+              <Popover>
+                <PopoverTrigger>
+                  <div className="flex cursor-pointer items-center justify-center gap-1 rounded-md text-accent-2">
+                    {isMounted && theme === 'dark' ? (
+                      <Image
+                        src="/icons/share_dark.svg"
+                        alt="share"
+                        height={20}
+                        width={20}
+                      />
+                    ) : (
+                      <Image
+                        src="/icons/share_light.svg"
+                        alt="share"
+                        height={20}
+                        width={20}
+                      />
+                    )}
 
-      {isMounted && theme === 'dark' ? (
-        <SyntaxHighlighter
-          style={coldarkDark}
-          showLineNumbers
-          wrapLines={true}
-          wrapLongLines
-          // language="javascript"
-        >
-          {post.body}
-        </SyntaxHighlighter>
-      ) : (
-        <SyntaxHighlighter
-          style={coldarkCold}
-          showLineNumbers
-          wrapLines={true}
-          wrapLongLines
-          // language="javascript"
-        >
-          {post.body}
-        </SyntaxHighlighter>
-      )}
-
-      <p className="mb-6 mt-10 text-lg font-semibold tracking-widest">
-        Comments:
-      </p>
-
-      {/* Comments section */}
-      {post.comments.length > 0 ? (
-        post.comments.map((comment, index) => (
-          <div key={index} className="py-2">
-            <div className="flex flex-1 cursor-pointer items-center justify-start gap-3">
-              <Image
-                src={comment.user.image}
-                alt="user_image"
-                width={40}
-                height={40}
-                className="rounded-full object-contain"
-              />
-              <div className="flex cursor-pointer items-center justify-center gap-4 ">
-                <h3 className="flex text-sm tracking-wider text-foreground">
-                  {comment.user.name}
-                </h3>
-                <code className="text-sm text-muted-foreground">
-                  {timeAgo(comment.createdAt)}
-                </code>
-              </div>
+                    <code className="text-xl font-normal">Share</code>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-96">
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    <code>{`http://localhost:3000${pathName}`}</code>
+                    <button
+                      className="rounded-md bg-accent-1 px-2 py-1 text-background hover:bg-accent-2"
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `http://localhost:3000${pathName}`
+                        );
+                        alert('Copied to clipboard');
+                      }}
+                    >
+                      Copy Url
+                    </button>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
-            <p className="ml-12 mr-12">{comment.text}</p>
           </div>
-        ))
-      ) : (
-        <code className="ml-12 mr-12">No comments yet</code>
-      )}
 
-      {/* Comment submission form */}
-      {session ? (
-        <form
-          onSubmit={handleCommentSubmit}
-          className="mt-5 flex flex-col gap-3 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800"
-        >
-          <textarea
-            className="w-full resize-none rounded-xl border border-muted-foreground bg-gray-100 p-2 text-gray-700 focus:border-muted-foreground focus:outline-none focus:ring focus:ring-muted-foreground dark:bg-gray-700 dark:text-gray-300"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Write a comment..."
-            disabled={submitting}
-          />
-          <button
-            type="submit"
-            disabled={submitting}
-            className="self-end rounded-lg bg-accent-1 px-4 py-2 text-background transition duration-300 ease-in-out hover:bg-accent-2 "
-          >
-            Submit Comment
-          </button>
-        </form>
-      ) : (
-        <p className="my-10 text-center tracking-wide text-muted-foreground">
-          Please log in to comment
-        </p>
+          {isMounted && theme === 'dark' ? (
+            <SyntaxHighlighter
+              style={coldarkDark}
+              showLineNumbers
+              wrapLines={true}
+              wrapLongLines
+              // language="javascript"
+            >
+              {post.body}
+            </SyntaxHighlighter>
+          ) : (
+            <SyntaxHighlighter
+              style={coldarkCold}
+              showLineNumbers
+              wrapLines={true}
+              wrapLongLines
+              // language="javascript"
+            >
+              {post.body}
+            </SyntaxHighlighter>
+          )}
+
+          <p className="mb-6 mt-10 text-lg font-semibold tracking-widest">
+            Comments:
+          </p>
+
+          {/* Comments section */}
+          {post.comments.length > 0 ? (
+            post.comments.map((comment, index) => (
+              <div key={index} className="py-2">
+                <div className="flex flex-1 cursor-pointer items-center justify-start gap-3">
+                  <Image
+                    src={comment.user.image}
+                    alt="user_image"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-contain"
+                  />
+                  <div className="flex cursor-pointer items-center justify-center gap-4 ">
+                    <h3 className="flex text-sm tracking-wider text-foreground">
+                      {comment.user.name}
+                    </h3>
+                    <code className="text-sm text-muted-foreground">
+                      {timeAgo(comment.createdAt)}
+                    </code>
+                  </div>
+                </div>
+                <p className="ml-12 mr-12">{comment.text}</p>
+              </div>
+            ))
+          ) : (
+            <code className="ml-12 mr-12">No comments yet</code>
+          )}
+
+          {/* Comment submission form */}
+          {session ? (
+            <form
+              onSubmit={handleCommentSubmit}
+              className="mt-5 flex flex-col gap-3 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800"
+            >
+              <textarea
+                className="w-full resize-none rounded-xl border border-muted-foreground bg-gray-100 p-2 text-gray-700 focus:border-muted-foreground focus:outline-none focus:ring focus:ring-muted-foreground dark:bg-gray-700 dark:text-gray-300"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Write a comment..."
+                disabled={submitting}
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="self-end rounded-lg bg-accent-1 px-4 py-2 text-background transition duration-300 ease-in-out hover:bg-accent-2 "
+              >
+                Submit Comment
+              </button>
+            </form>
+          ) : (
+            <p className="my-10 text-center tracking-wide text-muted-foreground">
+              Please log in to comment
+            </p>
+          )}
+        </div>
       )}
     </div>
   );
