@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import PostCard from './PostCard';
-
+import FeedSkeleton from './FeedSkeleton';
 type PostCardListProps = {
   data: any;
   handleTagClick: any;
@@ -88,17 +88,11 @@ const Feed = () => {
         />
       </form>
 
-      {/* {searchText ? (
-        <PostCardList data={searchedResults} handleTagClick={handleTagClick} />
-      ) : (
-        <PostCardList data={allPosts} handleTagClick={handleTagClick} />
-      )} */}
-
       {isLoading ? (
-        <div className="bg-steel-blue-5/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-center  justify-center">
-          <p className="text-xl font-semibold uppercase tracking-widest text-muted-foreground">
-            Loading...
-          </p>
+        <div className="grid w-full grid-cols-6 gap-8 pt-20">
+          <FeedSkeleton />
+          <FeedSkeleton />
+          <FeedSkeleton />
         </div>
       ) : searchText ? (
         <PostCardList data={searchedResults} handleTagClick={handleTagClick} />
