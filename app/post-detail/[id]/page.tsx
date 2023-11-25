@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 import Form from '@/components/Form';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
@@ -54,6 +55,8 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   const { theme, setTheme } = useTheme();
   const tags = post.tag.split(' ');
   const [isMounted, setIsMounted] = useState(false);
+
+  const pathName = usePathname();
 
   useEffect(() => {
     const getPostDetails = async () => {
@@ -228,16 +231,21 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
                 <code className="text-xl font-normal">Share</code>
               </div>
             </PopoverTrigger>
-            <PopoverContent>
-              <p>{window.location.href}</p>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  alert('Copied to clipboard');
-                }}
-              >
-                Copy Url
-              </button>
+            <PopoverContent className="w-96">
+              <div className="flex flex-col items-center justify-center gap-4">
+                <code>{`http://localhost:3000${pathName}`}</code>
+                <button
+                  className="rounded-md bg-accent-1 px-2 py-1 text-background hover:bg-accent-2"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `http://localhost:3000${pathName}`
+                    );
+                    alert('Copied to clipboard');
+                  }}
+                >
+                  Copy Url
+                </button>
+              </div>
             </PopoverContent>
           </Popover>
         </div>
