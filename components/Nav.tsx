@@ -81,7 +81,7 @@ const Nav = () => {
               type="button"
               onClick={(e) => {
                 e.preventDefault();
-                signOut();
+                signOut({ callbackUrl: '/', redirect: true });
               }}
               className="outline_btn"
             >
