@@ -3,7 +3,6 @@ import React from 'react';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import Form from '@/components/Form';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -11,6 +10,12 @@ import {
   coldarkDark,
   coldarkCold,
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 export type UserType = {
   _id: string;
@@ -201,28 +206,40 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
               )}
             </button>
           </div>
-          <div
-            // onClick={navigateToPostDetails}
-            className="flex cursor-pointer items-center justify-center gap-1 rounded-md px-2 text-accent-2"
-          >
-            {isMounted && theme === 'dark' ? (
-              <Image
-                src="/icons/share_dark.svg"
-                alt="share"
-                height={20}
-                width={20}
-              />
-            ) : (
-              <Image
-                src="/icons/share_light.svg"
-                alt="share"
-                height={20}
-                width={20}
-              />
-            )}
+          <Popover>
+            <PopoverTrigger>
+              <div className="flex cursor-pointer items-center justify-center gap-1 rounded-md px-2 text-accent-2">
+                {isMounted && theme === 'dark' ? (
+                  <Image
+                    src="/icons/share_dark.svg"
+                    alt="share"
+                    height={20}
+                    width={20}
+                  />
+                ) : (
+                  <Image
+                    src="/icons/share_light.svg"
+                    alt="share"
+                    height={20}
+                    width={20}
+                  />
+                )}
 
-            <code className="text-xl font-normal">Share</code>
-          </div>
+                <code className="text-xl font-normal">Share</code>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent>
+              <p>{window.location.href}</p>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert('Copied to clipboard');
+                }}
+              >
+                Copy Url
+              </button>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 
