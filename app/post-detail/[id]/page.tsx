@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -46,6 +47,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
 
   const [newComment, setNewComment] = useState<string>('');
   const { theme } = useTheme();
+  const tags = post.tag.split(' ');
 
   useEffect(() => {
     const getPostDetails = async () => {
@@ -117,11 +119,49 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="max-w-[1024px] px-10">
-      <div className="mb-10 border-b-[1px] border-muted-foreground ">
+    <div className="max-w-[1400px] px-10">
+      <div className="border-b-[1px] border-muted-foreground ">
         <h1 className=" mb-2 text-3xl lg:text-4xl">{post.title}</h1>
       </div>
-      {/* Display the post body as code */}
+
+      <div className="mb-10 mt-2 flex flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-center gap-2">
+          {tags.map((tag: string, index: number) => (
+            <code
+              key={index}
+              className="text-md cursor-pointer rounded-full bg-accent-2 px-2 text-background hover:bg-accent-2"
+            >
+              {tag}
+            </code>
+          ))}
+        </div>
+        <div className="mr-4 flex flex-row justify-around gap-8">
+          <div className="flex flex-row items-center justify-center gap-2">
+            <code className="text-xl font-normal">
+              Likes: {post.likes.length}
+            </code>
+            <button onClick={handleLike} disabled={!session}>
+              {session?.user.id && post.likes.includes(session?.user.id) ? (
+                <Image
+                  src="/icons/like_filled.svg"
+                  alt="unlike"
+                  height={24}
+                  width={24}
+                />
+              ) : (
+                <Image
+                  src="/icons/like_outlined.svg"
+                  alt="unlike"
+                  height={24}
+                  width={24}
+                />
+              )}
+            </button>
+          </div>
+          {/* Like button */}
+          <p>share</p>
+        </div>
+      </div>
 
       {theme === 'dark' ? (
         <SyntaxHighlighter
@@ -134,11 +174,16 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           {post.body}
         </SyntaxHighlighter>
       ) : (
-        <SyntaxHighlighter style={coldarkCold} showLineNumbers>
+        <SyntaxHighlighter
+          style={coldarkCold}
+          showLineNumbers
+          wrapLines={true}
+          wrapLongLines
+          language="javascript"
+        >
           {post.body}
         </SyntaxHighlighter>
       )}
-      <p>Tag: {post.tag}</p>
 
       {/* Like button */}
       <button onClick={handleLike} disabled={!session}>
