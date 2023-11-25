@@ -11,6 +11,8 @@ const Nav = () => {
 
   const [providers, setProviders] = useState<any>(null);
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+  const { theme, setTheme } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -20,7 +22,39 @@ const Nav = () => {
     setUpProviders();
   }, []);
 
-  const { theme, setTheme } = useTheme();
+  useEffect(() => {
+    setIsMounted(true);
+    const savedTheme =
+      localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light');
+    setTheme(savedTheme);
+  }, [setTheme]);
+
+  const renderThemeIcon = () => {
+    if (!isMounted) return null;
+
+    return theme === 'light' ? (
+      <Image
+        src="/icons/moon.svg"
+        alt="moon"
+        height={24}
+        width={24}
+        className="cursor-pointer"
+        onClick={() => setTheme('dark')}
+      />
+    ) : (
+      <Image
+        src="/icons/sun.svg"
+        alt="sun"
+        height={24}
+        width={24}
+        className="cursor-pointer"
+        onClick={() => setTheme('light')}
+      />
+    );
+  };
 
   return (
     <nav className=" mb-16 flex w-full items-center justify-between px-10 pt-3">
@@ -37,18 +71,10 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className="hidden sm:flex">
-        <button
-          className="mr-6"
-          onClick={() => {
-            setTheme(theme === 'dark' ? 'light' : 'dark');
-          }}
-        >
-          {theme === 'dark' ? (
-            <Image src="/icons/sun.svg" alt="sun" height={24} width={24} />
-          ) : (
-            <Image src="/icons/moon.svg" alt="moon" height={24} width={24} />
-          )}
-        </button>
+        <div className="flex items-center justify-center px-8">
+          {renderThemeIcon()}
+        </div>
+
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-post" className="black_btn">
