@@ -84,7 +84,7 @@ const PostCard = ({
   const { theme } = useTheme();
 
   return (
-    <div className="bg-secondaryBg border-borderColor col-span-6 my-2 flex flex-col justify-between rounded-xl border-[2px] p-4">
+    <div className="col-span-6 my-2 flex flex-col justify-between rounded-xl border-[2px] border-borderColor bg-secondaryBg p-4">
       <div>
         <div className="flex w-full items-start justify-between gap-5">
           <div
@@ -119,8 +119,8 @@ const PostCard = ({
             {tags.map((tag: string, index: number) => (
               <code
                 key={index}
-                className="bg-accent-1 hover:bg-accent-2 cursor-pointer rounded-full px-2 text-sm text-background"
-                onClick={() => handleTagClick(tag)}
+                className="cursor-pointer rounded-full bg-accent-1 px-2 text-sm text-background hover:bg-accent-2"
+                onClick={() => handleTagClick && handleTagClick(tag)}
               >
                 {tag}
               </code>
@@ -161,7 +161,7 @@ const PostCard = ({
 
         <button
           onClick={navigateToPostDetails}
-          className="text-accent-1 flex gap-1 rounded-md bg-muted px-2"
+          className="flex gap-1 rounded-md bg-muted px-2 text-accent-1"
         >
           {theme === 'dark' ? (
             <Image

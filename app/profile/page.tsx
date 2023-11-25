@@ -74,12 +74,12 @@ const ProfilePage = () => {
         </p>
       </div>
 
-      <Tabs defaultValue="account" className="mt-32">
+      <Tabs defaultValue="All Posts" className="mt-32">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="All Posts">Account</TabsTrigger>
+          <TabsTrigger value="Liked Posts">Password</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
+        <TabsContent value="All Posts">
           <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
             All Posts
           </p>
@@ -89,7 +89,7 @@ const ProfilePage = () => {
             handleDelete={handleDelete}
           />
         </TabsContent>
-        <TabsContent value="password">
+        <TabsContent value="Liked Posts">
           <section className="mx-10 mb-20">
             <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
               Liked Posts

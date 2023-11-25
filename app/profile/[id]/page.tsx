@@ -22,11 +22,13 @@ const UserProfile = ({ params }: { params: { id: string } }) => {
   }, [params?.id]);
 
   return (
-    <Profile
-      name={userName}
-      desc={`Welcome to ${userName}'s personalized profile page.`}
-      data={userPosts}
-    />
+    <div className="w-full px-10">
+      <Profile
+        name={userName}
+        desc={`Welcome to ${userName}'s personalized profile page.`}
+        data={userPosts}
+      />
+    </div>
   );
 };
 
