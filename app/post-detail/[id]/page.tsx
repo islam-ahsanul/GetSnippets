@@ -110,8 +110,10 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div>
-      <h1>{post.title}</h1>
+    <div className="max-w-[1024px] px-10">
+      <div className="mb-10 border-b-[1px] border-muted-foreground ">
+        <h1 className=" mb-2 text-3xl lg:text-4xl">{post.title}</h1>
+      </div>
       <p>{post.body}</p>
       <p>Tag: {post.tag}</p>
 
