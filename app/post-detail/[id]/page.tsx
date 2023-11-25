@@ -149,7 +149,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="mb-10 max-w-[1400px] px-10">
+    <div className="mb-10 w-full max-w-[1400px] px-10">
       <div className="border-b-[1px] border-muted-foreground ">
         <h1 className=" mb-2 text-3xl font-semibold tracking-wide lg:text-4xl">
           {post.title}
@@ -221,7 +221,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           showLineNumbers
           wrapLines={true}
           wrapLongLines
-          language="javascript"
+          // language="javascript"
         >
           {post.body}
         </SyntaxHighlighter>
@@ -231,13 +231,15 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           showLineNumbers
           wrapLines={true}
           wrapLongLines
-          language="javascript"
+          // language="javascript"
         >
           {post.body}
         </SyntaxHighlighter>
       )}
 
-      <p className="my-4 text-lg font-semibold tracking-widest">Comments:</p>
+      <p className="mb-6 mt-10 text-lg font-semibold tracking-widest">
+        Comments:
+      </p>
 
       {/* Comments section */}
       {post.comments.length > 0 ? (
@@ -292,7 +294,9 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
           </button>
         </form>
       ) : (
-        <p>Please log in to comment</p>
+        <p className="my-10 text-center tracking-wide text-muted-foreground">
+          Please log in to comment
+        </p>
       )}
     </div>
   );
