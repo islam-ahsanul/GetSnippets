@@ -1,7 +1,11 @@
-import React from 'react';
-
-const loading = () => {
-  return <div className="text-red-500">loading</div>;
+const LoadingSpinner = () => {
+  return (
+    <div className="bg-steel-blue-5/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-center  justify-center">
+      <p className="text-xl font-semibold uppercase tracking-widest text-muted-foreground">
+        Loading...
+      </p>
+    </div>
+  );
 };
 
-export default loading;
+export default LoadingSpinner;
