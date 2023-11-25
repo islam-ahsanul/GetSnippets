@@ -146,7 +146,7 @@
 
   /* Nav Component */
   .logo_text {
-    @apply text-lg font-semibold tracking-wide text-black max-sm:hidden;
+    @apply text-lg font-semibold text-foreground max-sm:hidden;
   }
 
   .dropdown {

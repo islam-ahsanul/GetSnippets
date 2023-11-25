@@ -59,14 +59,17 @@ const Nav = () => {
   return (
     <nav className=" mb-16 flex w-full items-center justify-between px-10 pt-3">
       <Link href="/" className="flex-center flex gap-2">
-        <Image
+        {/* <Image
           src="/images/logo.svg"
           alt="logo"
           width={30}
           height={30}
           className="object-contain"
-        />
-        <p className="logo_text">Promptopia</p>
+        /> */}
+        <p className="logo_text tracking-widest">
+          <span className="text-accent-2">get</span>
+          <span className="text-accent-1">Snippets</span>
+        </p>
       </Link>
 
       {/* Desktop Navigation */}
