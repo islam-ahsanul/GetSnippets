@@ -105,8 +105,10 @@ const ProfilePage = () => {
                   />
                 ))
               ) : (
-                <div className="flex w-full flex-col items-center justify-center">
-                  <p>You have not liked any posts yet.</p>
+                <div className="col-span-6 mt-20 lg:col-span-12">
+                  <p className="text-center tracking-wider text-muted-foreground ">
+                    You have not liked any posts yet....
+                  </p>
                 </div>
               )}
             </div>
