@@ -12,7 +12,15 @@ export const GET = async (
     await connectToDB();
     const userId = route.params.id;
 
-    const user = await User.findById(userId).populate('likedPosts');
+    const user = await User.findById(userId).populate({
+      path: 'likedPosts',
+      select: 'title body tag creator createdAt',
+      populate: {
+        path: 'creator',
+        model: 'User',
+        select: 'name email image',
+      },
+    });
 
     if (!user) {
       return new Response('User not found', { status: 404 });

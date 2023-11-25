@@ -15,7 +15,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
   return (
     <section className="flex w-full max-w-full flex-col  justify-center  px-20">
       <h1 className="head_text text-left">
-        <span className="text-blue-500">{type} Post</span>
+        <span className="text-accent-1">{type} Post</span>
       </h1>
       <p className="desc max-w-md text-left">
         {type} and share your code with the world.
@@ -23,7 +23,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
       <div className="flex w-full max-w-full flex-col  items-center justify-center">
         <form
           onSubmit={handleSubmit}
-          className="bg-secondaryBg mt-10 flex w-full max-w-2xl flex-col justify-center gap-7 rounded-xl px-10 py-10"
+          className="mt-10 flex w-full max-w-2xl flex-col justify-center gap-7 rounded-xl bg-secondaryBg px-10 py-10"
         >
           <label>
             <span className="text-base font-semibold text-foreground">
@@ -91,7 +91,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-accent-1 hover:bg-accent-2 rounded-full px-5 py-1.5 text-sm text-background"
+              className="rounded-full bg-accent-1 px-5 py-1.5 text-sm text-background hover:bg-accent-2"
             >
               {submitting ? `${type}...` : type}
             </button>

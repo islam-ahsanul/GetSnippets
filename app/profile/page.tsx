@@ -3,23 +3,41 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Profile from '@/components/Profile';
+import PostCard from '@/components/PostCard';
 
 const ProfilePage = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/users/${session?.user.id}/posts`);
-        const data = await res.json();
-        setPosts(data.reverse());
+        const resAll = await fetch(`/api/users/${session?.user.id}/posts`);
+        const dataAll = await resAll.json();
+        setPosts(dataAll.reverse());
       } catch (err) {
         console.log(err);
       }
     };
+
+    const fetchLikedPosts = async () => {
+      try {
+        const response = await fetch(
+          `/api/users/${session?.user.id}/likedPosts`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch liked posts');
+        }
+        const data = await response.json();
+        setLikedPosts(data);
+      } catch (error) {
+        console.error('Error fetching liked posts:', error);
+      }
+    };
     if (session?.user.id) fetchPosts();
+    if (session?.user.id) fetchLikedPosts();
   }, []);
 
   const handleEdit = (post: any) => {
@@ -44,13 +62,43 @@ const ProfilePage = () => {
   };
 
   return (
-    <Profile
-      name="My"
-      desc="Welcome to your profile page"
-      data={posts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-    />
+    <div className="mx-4">
+      <div>
+        <h1 className="mt-3 text-left text-2xl font-extrabold leading-[1.15] text-foreground sm:text-5xl">
+          {' '}
+          <span className="text-accent-1">My Profile</span>{' '}
+        </h1>
+        <p className="text-md mt-5 max-w-[900px] text-left text-muted-foreground">
+          Your Personalized Profile Page
+        </p>
+        <p className="mt-20 text-center text-xl font-bold uppercase tracking-widest text-foreground">
+          All Posts
+        </p>
+      </div>
+      <Profile
+        // name="My"
+        // desc="Welcome to your profile page"
+        data={posts}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+
+      <div>
+        <h2>Liked Posts</h2>
+        {likedPosts.length > 0 ? (
+          likedPosts.map((post: any) => (
+            <PostCard
+              key={post._id}
+              post={post}
+              // handleEdit={() => handleEdit && handleEdit(post)}
+              // handleDelete={() => handleDelete && handleDelete(post)}
+            />
+          ))
+        ) : (
+          <p>You have not liked any posts yet.</p>
+        )}
+      </div>
+    </div>
   );
 };
 
