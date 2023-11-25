@@ -12,7 +12,9 @@ const homepage = () => {
         shared snippets. Explore, collaborate, and grow together in an ecosystem
         fueled by collective knowledge.
       </code>
-      <Feed />
+      <div className="w-full">
+        <Feed />
+      </div>
     </section>
   );
 };

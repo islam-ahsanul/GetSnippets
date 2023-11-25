@@ -9,7 +9,7 @@ type PostCardListProps = {
 
 const PostCardList = ({ data, handleTagClick }: PostCardListProps) => {
   return (
-    <div className="grid grid-cols-6 gap-8 pt-20">
+    <div className="grid w-full grid-cols-6 gap-8 pt-20">
       {data.map((post: any) => (
         <PostCard key={post._id} post={post} handleTagClick={handleTagClick} />
       ))}
