@@ -14,7 +14,7 @@ const ProfilePage = () => {
       try {
         const res = await fetch(`/api/users/${session?.user.id}/posts`);
         const data = await res.json();
-        setPosts(data);
+        setPosts(data.reverse());
       } catch (err) {
         console.log(err);
       }

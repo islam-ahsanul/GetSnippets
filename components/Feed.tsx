@@ -32,7 +32,7 @@ const Feed = () => {
       try {
         const res = await fetch('/api/post');
         const data = await res.json();
-        setAllPosts(data);
+        setAllPosts(data.reverse());
       } catch (err) {
         console.log(err);
       }
@@ -80,7 +80,7 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="bg-secondaryBg peer block w-full rounded-full border border-muted py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-muted-foreground focus:outline-none focus:ring-0"
+          className="peer block w-full rounded-xl border border-muted bg-secondaryBg py-2.5 pl-5 pr-12 text-sm font-medium shadow-lg focus:border-muted-foreground focus:outline-none focus:ring-0"
         />
       </form>
 

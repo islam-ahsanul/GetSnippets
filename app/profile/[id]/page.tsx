@@ -13,7 +13,7 @@ const UserProfile = ({ params }: { params: { id: string } }) => {
       try {
         const res = await fetch(`/api/users/${params?.id}/posts`);
         const data = await res.json();
-        setUserPosts(data);
+        setUserPosts(data.reverse());
       } catch (err) {
         console.log(err);
       }
