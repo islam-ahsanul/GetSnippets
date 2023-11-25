@@ -59,9 +59,9 @@ const Nav = () => {
   return (
     <nav className=" mb-16 flex w-full items-center justify-between px-10 pt-3">
       <Link href="/" className="flex-center flex gap-2">
-        <p className="logo_text tracking-widest">
-          <span className="text-accent-2">get</span>
-          <span className="text-accent-1">Snippets</span>
+        <p className="font-bold tracking-widest">
+          <span className="text-2xl italic text-accent-2">get</span>
+          <span className="text-2xl italic text-accent-1">Snippets</span>
         </p>
       </Link>
 
