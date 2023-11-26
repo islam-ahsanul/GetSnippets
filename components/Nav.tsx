@@ -106,7 +106,7 @@ const Nav = () => {
                   type="button"
                   key={provider.name}
                   onClick={() => {
-                    signIn(provider.id);
+                    signIn(provider.id, { callbackUrl: '/', redirect: true });
                   }}
                   className="black_btn"
                 >
