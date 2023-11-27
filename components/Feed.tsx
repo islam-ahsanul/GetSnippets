@@ -48,9 +48,9 @@ const Feed = () => {
     const regex = new RegExp(searchtext, 'i'); // 'i' flag for case-insensitive search
     return allPosts.filter(
       (item: any) =>
-        regex.test(item.creator.email) ||
-        regex.test(item.tag) ||
-        regex.test(item.title)
+        regex.test(item?.creator.email) ||
+        regex.test(item?.tag) ||
+        regex.test(item?.title)
     );
   };
 
